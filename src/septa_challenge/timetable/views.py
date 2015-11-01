@@ -39,19 +39,19 @@ def json_from_url(url):
 def build_url_for_septa_call(from_station, to_station):
     base = 'http://www3.septa.org/hackathon/NextToArrive/'
     query_string = urllib.urlencode({ "req1" : format_station(from_station), "req2" : format_station(to_station)})
-    print query_string
     return base + '?' + query_string
 
 def format_station(station):
     return station.replace(' & ', '-').replace('Airport Terminals', 'Airport Terminal')
 
 def build_rows(json_array):
-    # Verify it's an array, and try ot print error if it's not
     if not isinstance(json_array, list):
-        if 'error' in json_array:
-            print json_array['error']
+        # if 'error' in json_array:
+        #     print json_array['error']
         raise TypeError('Expected a list!')
 
-    return ((json_object['orig_train'], json_object['orig_departure_time'], json_object['orig_arrival_time'], json_object['orig_delay'])
+    return ((json_object['orig_train'],
+        json_object['orig_departure_time'],
+        json_object['orig_arrival_time'] if json_object['isdirect'] == 'true' else json_object['term_arrival_time'],
+        json_object['orig_delay'])
         for json_object in json_array)
-    
