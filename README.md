@@ -28,4 +28,4 @@ Once you get the app unpacked and ready to go, start the server by running the s
 
 Navigating a browser to localhost:8000 will show you how the site looks to get started, and has a helpful hint or two.  If you run into problems with the setup, let us know.  
 
-Once you are done, please email us a screenshot of your solution and a link to a git repository (or some other code-sharing link).  
+Once you are done, please email us a screenshot of your solution and a link to a private repository (bitbucket is an option if you don't have a paid Github acct) or some other private code-sharing solution. 
