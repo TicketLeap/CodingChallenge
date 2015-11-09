@@ -90,8 +90,25 @@ body {
             </h2>
             <div class="panel">
                 <form>
-                    <label> Starting Station </label> <select> </select>
-                    <label> Ending Station </label> <select> </select>
+                    <label> Starting Station </label> <select name="from_station">
+                        {% for station in stations %}
+                            <option value="{{station.name}}"
+                            {% if station.name == from_station %}
+                            selected
+                            {% endif %}
+                            >{{station.name}}</option>
+                        {% endfor %}
+                     </select>
+<!--                      So not DRY...-->  
+                      <label> Ending Station </label> <select name="to_station"> 
+                       {% for station in stations %}
+                            <option value="{{station.name}}"
+                            {% if station.name == to_station %}
+                            selected
+                            {% endif %}
+                            >{{station.name}}</option>
+                        {% endfor %} 
+                    </select>
                     <button> Go! </button>
                 </form>
             </div>
@@ -106,8 +123,42 @@ body {
             <p>
             <b>Hint:</b> SEPTA's API <a href="http://www3.septa.org/">documentation</a> might help you if you get stuck or want to know
             more about the structure of the data.  
-            </b>
+            </p>
+            {% if error %}
+                <h3>
+                    Error!
+                </h3>
+                <p>{{error}}</p>
+            {% elif rows %}
+                <h4>
+                    From {{from_station}} to {{to_station}}.
+                </h4>
+                <table>
+                    <tr>                    
+                        {% for field in column_names %}
+                        <th>
+                            {{field}}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                    {% for row in rows %}
+                    <tr>
+                        {% for entry in row %}
+                        <td>
+                            {{entry}}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
         </div>
     </body>
+    <script type="text/javascript">
+    (function () {
+        //Reload the page every 30 seconds to update the table.
+        setInterval(function(){location.reload();}, 30000);
+    })();
+    </script>
 </html>
 

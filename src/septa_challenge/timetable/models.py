@@ -6,10 +6,10 @@ class Station(models.Model):
     fare_zone = models.CharField(max_length=10)
 
     def __unicode__(self):
-        return str(self.name)
+        return self.name
 
 class Line(models.Model):
     name = models.CharField(max_length=200)
 
     def __unicode__(self):
-        return str(self.name)
+        return self.name
