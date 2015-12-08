@@ -1,14 +1,12 @@
 #The Ticketleap Coding Challenge
 
-**In the Philadelphia area,** many people commute to work using the SEPTA Regional Rail system.  You have been tasked with making a very simple application that allows riders to see what trains they can catch, and whether they’re on time.  To do this, you will take advantage of SEPTA’s train status API:
+**In the Philadelphia area,** many people commute to work using the SEPTA Regional Rail system.  You have been tasked with making a very simple application that allows users to see which SEPTA vehicles are where at the current moment (leveraging Google Maps). SEPTA exposes an API for getting a JSON of every vehicle and its location:
 
-http://www3.septa.org/hackathon/NextToArrive/?req1=Swarthmore&req2=30th+Street+Station
+http://www3.septa.org/hackathon/TransitViewAll/
 
-(The URL structure for the request is pretty straightforward - the example here is for trains from Swarthmore to 30th Street Station)
+You’ve been provided a simple one-page Django that renders the shell of the page. Your job is to call the SEPTA API and then populate the Google Map with markers. 
 
-You’ve been provided a simple one-page Django that renders the shell of the page.  Your job is to add a table to the page which displays the trains returned by the API call, their scheduled departure time, arrival time, and whether they’re running late or on time.   
-
-This data should be current as of each page load, but unless you’ve got some time leftover don’t worry about trying to make the updates live.  There are many ways to accomplish this task on both the server and the client side, so go with what you’re familiar with.  
+This data should be current as of each page load, but unless you’ve got some time leftover don’t worry about trying to make the updates live.  There are many ways to accomplish this task on both the server and the client side, so go with what you’re familiar with. NOTE: SEPTA's API is not CORS friendly, so do **not** expect to make a simple ajax request directly to septa.org from the browser.
 
 **The sample code we've given you is in Python/Django, but don't let that limit you!** If you can get a Node.js stack up and running in no time flat, feel free to chuck what we've given you.  Want to use the part of the app that renders the main page and do the rest in JavaScript?  That's fine too!  At the end of the day this is about seeing how you solve open-ended problems, so even if you can't get it 100% of the way there we still want to see what you've done. 
 
@@ -23,6 +21,10 @@ Once you get the app unpacked and ready to go, start the server by running the s
 ```./setup.sh ```
 
 (It will prompt you for a password).  This installs the tools pip (python package installer) and a virtual environment tool on your system.  It runs a variety of commands to configure Django from scratch, but feel free to look at it before running to get a better sense of what it does. 
+
+Get a Google Maps API key: [Get a Key for JavaScript API](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+Add your Google API key to main.html (scroll down to the bottom where you'll see the Google Maps script tag and a comment in HTML saying "ADD YOUR KEY HERE")
 
 **If you do run into trouble during installation, let us know!**  The setup shouldn't be the part you're spending your time on.  If it takes more than a few minutes to get set up feel free to reach out to us and we'll see what we can do to get you un-stuck. 
 

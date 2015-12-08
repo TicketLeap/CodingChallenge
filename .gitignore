@@ -1,0 +1,3 @@
+*.pyc
+src/septa_challenge/static/admin/**
+venv/**

@@ -19,4 +19,5 @@ from timetable import views
 
 urlpatterns = [
     url(r'^$', views.home, name="home"),
+    url(r'^render_json$', views.render_json),
 ]

@@ -1,18 +1,22 @@
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"> 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<style>
 body { 
     background-color: #ecf0f1;
 }
-.container { 
-    background-color: white;
-    min-height: 800px;
-}
+
+#map { height: 500px; width: 100%;}
 
 .navbar-default {
     background-color: #394ba3;
@@ -77,37 +81,72 @@ body {
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">SEPTA Tracker 9000</a>
-                </div>
-            </div>
-        </nav>
         <div class="container" style="background-color: white">
             <h2>
-                Train Status
+                Vehicle locations
             </h2>
-            <div class="panel">
-                <form>
-                    <label> Starting Station </label> <select> </select>
-                    <label> Ending Station </label> <select> </select>
-                    <button> Go! </button>
-                </form>
-            </div>
-            <p> <span class="lead"> The SEPTA Tracker 9000 </span> is really cool.  But right now it doesn't do a whole lot. How you do it is up to you, but I should see a table of trains and their departure, arrival times, and on-time status here.  <b> Do not </b> spend more than an hour or two making this happen, and get as far as you can.  It would be cool if the app updated automatically with new information, say, every thirty seconds, but only tackle that if you have extra time.  
-            If Django/Python is your thing, you should find this skeleton helpful.  If JavaScript is more your thing, you might find the contents of ../fixtures/ helpful in getting your station options above. </p>
-            <p>
-            <b>Hint:</b> When making API calls to SEPTA, you might find that they work great on everything except airport terminals.  
-            Because of their ampersands, presumably, SEPTA has decided that while the station name is, for example, 
-            'Airport Terminals E &amp; F', the API call must refer to it as "Aiport Terminal E-F".  
-            You should handle this issue.
+            <p> <span class="lead"> The SEPTA Tracker 9000 </span> is really cool.
+                But right now it doesn't do a whole lot. How you do it is up to you, but here are the "must haves":
+                <ul>
+                    <li>A marker for each SEPTA vehicle</li>
+                    <li>An InfoWindow (see <a href="https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple">this</a>)
+                        for each vehicle that includes:
+                        <ul>
+                            <li>Position (latitude and longitude)</li>
+                            <li>(if defined) Vehicle ID</li>
+                            <li>(if defined) Direction</li>
+                            <li>(if defined) Destination</li>
+                        </ul>
+                        How you present this information is totally up to you (see the markup for example on how to use InfoWindow's)
+                    </li>
+                </ul>
+                <mark>Bonus Round!</mark> If you're a JavaScript/Django wizard then try adding one or more these features:
+                <ul>
+                    <li>Auto-refresh the map periodically with latest vehicle positions.</li>
+                    <li>Allow the user to enter a position (lat+lng) along with a radius, and then only
+                        show vehicles within that area. How users input the data is your decision.</li>
+                    <li>Allow the user to enter a position (lat+lng), and then report the closest vehicle to it.</li>
+                </ul>
             </p>
-            <p>
-            <b>Hint:</b> SEPTA's API <a href="http://www3.septa.org/">documentation</a> might help you if you get stuck or want to know
-            more about the structure of the data.  
-            </b>
+        <div id="map"></div>
         </div>
+        <script type="text/javascript">
+        /*
+        Here is some sample google maps code to help you get started!
+         */
+        (function (w, $) {
+            var map, testMarker, testInfoWindow;
+
+            w.initMap = function () {
+                map = new w.google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 39.95, lng: -75.1667},
+                    zoom: 11
+                });
+
+                testMarker = new w.google.maps.Marker({
+                    position: {lat: 39.9558, lng: -75.1824},
+                    map : map,
+                    title : "I'm a test!" //will appear as a tooltip on-hover.
+                });
+
+                testInfoWindow = new w.google.maps.InfoWindow({
+                    content : "<ol><li>You can use HTML inside an info window FYI</li></ol>"
+                });
+
+                testMarker.addListener('click', function () {
+                    testInfoWindow.open(map, testMarker);
+                });
+            };
+            /*
+            HINT: Put your JavaScript here!
+             */
+        })(window, $);
+        </script>
+        <!--ADD YOUR KEY HERE (replace YOUR_KEY below in the url with your api key) -->
+        <script async defer
+          src="http://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap">
+        </script>
+
     </body>
 </html>
 
