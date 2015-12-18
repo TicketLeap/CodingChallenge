@@ -28,6 +28,4 @@ Add your Google API key to main.html (scroll down to the bottom where you'll see
 
 **If you do run into trouble during installation, let us know!**  The setup shouldn't be the part you're spending your time on.  If it takes more than a few minutes to get set up feel free to reach out to us and we'll see what we can do to get you un-stuck. 
 
-Navigating a browser to localhost:8000 will show you how the site looks to get started, and has a helpful hint or two.  If you run into problems with the setup, let us know.  
-
-Once you are done, please email us a screenshot of your solution and a link to a private repository (bitbucket is an option if you don't have a paid Github acct) or some other private code-sharing solution. 
+Navigating a browser to localhost:8000 will show you how the site looks to get started, and has a helpful hint or two.  If you run into problems with the setup, let us know.
