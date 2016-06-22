@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"> 
+<meta charset="utf-8">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -12,7 +12,7 @@
 <!-- Latest compiled JavaScript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <style>
-body { 
+body {
     background-color: #ecf0f1;
 }
 
@@ -115,36 +115,58 @@ body {
         Here is some sample google maps code to help you get started!
          */
         (function (w, $) {
-            var map, testMarker, testInfoWindow;
+
+            // Add marker to map
+            var addToMap = function(map, vehicle) {
+                console.log('adding marker to map');
+
+                var marker = new w.google.maps.Marker({
+                    position: {lat: vehicle.lat, lng: vehicle.lng},
+                    map : map,
+                    title : vehicle.id.toString()
+                });
+
+                // Make this less ugly eventually
+                var infoWindowContent = (vehicle.id.toString()
+                                         + " Pos: (" + vehicle.lat + "," + vehicle.lng + ')'
+                                         + " Dir: " + (vehicle.dir || "None")
+                                         + " Dest: " + (vehicle.dest || "None") );
+
+                var infoWindow = new w.google.maps.InfoWindow({
+                    content : infoWindowContent
+                });
+
+                marker.addListener('click', function() {infoWindow.open(map, marker)});
+            };
+
+            // Get the data
+            var renderMap = function(map) {
+                $.getJSON("/render_json", function(data) {
+                    console.log('Got data; rendering it now');
+
+                    window.data = data;
+
+                    $.each(data.data, function (i, dataPoint) {
+                        addToMap(map, dataPoint)
+                    });
+                });
+            };
 
             w.initMap = function () {
-                map = new w.google.maps.Map(document.getElementById('map'), {
+                var map = new w.google.maps.Map(document.getElementById('map'), {
                     center: {lat: 39.95, lng: -75.1667},
                     zoom: 11
                 });
 
-                testMarker = new w.google.maps.Marker({
-                    position: {lat: 39.9558, lng: -75.1824},
-                    map : map,
-                    title : "I'm a test!" //will appear as a tooltip on-hover.
-                });
+                renderMap(map);
 
-                testInfoWindow = new w.google.maps.InfoWindow({
-                    content : "<ol><li>You can use HTML inside an info window FYI</li></ol>"
-                });
-
-                testMarker.addListener('click', function () {
-                    testInfoWindow.open(map, testMarker);
-                });
             };
-            /*
-            HINT: Put your JavaScript here!
-             */
+
         })(window, $);
         </script>
         <!--ADD YOUR KEY HERE (replace YOUR_KEY below in the url with your api key) -->
         <script async defer
-          src="http://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=initMap">
+          src="http://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap">
         </script>
 
     </body>
